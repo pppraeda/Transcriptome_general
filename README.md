@@ -81,3 +81,63 @@ do
 done
 
 ```
+
+### Assembly with Trinity
+I already have a conda environment set up with all the requirements for Trinity, so i'll be using that for assemblies. 
+
+P1-100 Ghost assembly:
+
+```
+#!/bin/bash
+#SBATCH --partition=standard
+#SBATCH --account=panilab
+#SBATCH --job-name=trinity_ghost-p1-100
+#SBATCH --output=trinity.out
+#SBATCH --error=trinity.err
+#SBATCH --time=3-00:00:00
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=100G
+#SBATCH --mail-user=bqc8em@virginia.edu
+#SBATCH --mail-type=END,FAIL
+
+ml miniforge
+
+conda activate /home/bqc8em/.conda/envs/Trinity
+
+
+Trinity \
+  --seqType fq \
+  --left /standard/panilab/Becky/shortread-RNAseq/P1-100/BaseSpace/WorleyLab-442058840/BCLConvert_02_13_2026_02_18_28Z-899399509/trimmed/Ghost-trimmed/ghost_left.fq.gz \
+  --right /standard/panilab/Becky/shortread-RNAseq/P1-100/BaseSpace/WorleyLab-442058840/BCLConvert_02_13_2026_02_18_28Z-899399509/trimmed/Ghost-trimmed/ghost_right.fq.gz \
+  --CPU 16 \
+  --max_memory 100G \
+  --normalize_reads
+```
+
+Pancake P1-100 assembly:
+```
+#!/bin/bash
+#SBATCH --partition=standard
+#SBATCH --account=panilab
+#SBATCH --job-name=trinity_pancake
+#SBATCH --output=trinity.out
+#SBATCH --error=trinity.err
+#SBATCH --time=3-00:00:00
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=100G
+#SBATCH --mail-user=bqc8em@virginia.edu
+#SBATCH --mail-type=END,FAIL
+
+ml miniforge
+
+conda activate /home/bqc8em/.conda/envs/Trinity
+
+
+Trinity \
+  --seqType fq \
+  --left /standard/panilab/Becky/shortread-RNAseq/P1-100/BaseSpace/WorleyLab-442058840/BCLConvert_02_13_2026_02_18_28Z-899399509/trimmed/Pancake-trimmed/U020D3_S20_L001_paired_R1.fastq.gz \
+  --right /standard/panilab/Becky/shortread-RNAseq/P1-100/BaseSpace/WorleyLab-442058840/BCLConvert_02_13_2026_02_18_28Z-899399509/trimmed/Pancake-trimmed/U020D3_S20_L001_paired_R2.fastq.gz \
+  --CPU 16 \
+  --max_memory 100G \
+  --normalize_reads
+```
